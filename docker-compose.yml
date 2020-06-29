@@ -1,0 +1,21 @@
+version: "3.8"
+services:
+  mariadb:
+    container_name: mariadb
+    image: mariadb:10.5.3
+    restart: always
+    volumes:
+      - ./server/mariadb/mysql:/var/lib/mysql
+      - ./server/mariadb/conf.d:/etc/mysql/conf.d
+    ports:
+      - 43306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: puppkitt1234
+  go-api:
+    build: ./docker
+    depends_on:
+      - mariadb
+    volumes:
+      - ./go:/go/src
+    ports:
+      - 48080:8080

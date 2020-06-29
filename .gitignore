@@ -1,0 +1,10 @@
+
+/go/main
+/go/gin-bin
+/go/vendor/
+
+/mariadb/mysql/
+# Log files
+*.log
+*.log.jsonl
+*.log.gz
