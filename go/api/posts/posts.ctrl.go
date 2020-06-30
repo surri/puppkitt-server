@@ -96,7 +96,7 @@ func remove(c *gin.Context) {
 		return
 	}
 
-	if post.UserID != user.ID {
+	if post.UserId != user.Id {
 		c.AbortWithStatus(403)
 		return
 	}
@@ -128,7 +128,7 @@ func update(c *gin.Context) {
 		return
 	}
 
-	if post.UserID != user.ID {
+	if post.UserId != user.Id {
 		c.AbortWithStatus(403)
 		return
 	}

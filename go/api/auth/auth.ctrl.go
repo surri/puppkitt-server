@@ -62,13 +62,17 @@ func generateToken(data common.JSON) (string, error) {
 	return tokenString, err
 }
 
+func getMillis() int64 {
+    return ( time.Now().UnixNano() / int64(time.Millisecond) )
+}
+
 func register(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 
 	type RequestBody struct {
-		Username    string `json:"username" binding:"required"`
-		NickName    string `json:"nick_name" binding:"required"`
-		Password    string `json:"password" binding:"required"`
+		UserName    string `json:"UserName" binding:"required"`
+		NickName    string `json:"NickName" binding:"required"`
+		Password    string `json:"Password" binding:"required"`
 	}
 
 	var body RequestBody
@@ -79,8 +83,11 @@ func register(c *gin.Context) {
 
 	// check existancy
 	var exists User
-	if err := db.Where("username = ?", body.Username).First(&exists).Error; err == nil {
-		c.AbortWithStatus(409)
+	if err := db.Where("UserName = ?", body.UserName).First(&exists).Error; err == nil {
+		c.AbortWithStatusJSON(409, common.JSON{
+			"UserName":  body.UserName,
+			"Message": "exists UserName",
+		})
 		return
 	}
 
@@ -90,12 +97,16 @@ func register(c *gin.Context) {
 		return
 	}
 
+	date := time.Now()//getMillis()
+
 	// create user
 	user := User{
-		ID : NewId(),
-		Username:	body.Username,
+		Id : NewId(),
+		CreateAt:	date,
+		UpdateAt:	date,
+		UserName:	body.UserName,
 		NickName:	body.NickName,
-		PasswordHash: hash,
+		Password:	hash,
 	}
 
 	db.NewRecord(user)
@@ -114,7 +125,7 @@ func register(c *gin.Context) {
 func login(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 	type RequestBody struct {
-		Username string `json:"username" binding:"required"`
+		UserName string `json:"UserName" binding:"required"`
 		Password string `json:"password" binding:"required"`
 	}
 
@@ -126,12 +137,12 @@ func login(c *gin.Context) {
 
 	// check existancy
 	var user User
-	if err := db.Where("username = ?", body.Username).First(&user).Error; err != nil {
+	if err := db.Where("UserName = ?", body.UserName).First(&user).Error; err != nil {
 		c.AbortWithStatus(404) // user not found
 		return
 	}
 
-	if !checkHash(body.Password, user.PasswordHash) {
+	if !checkHash(body.Password, user.Password) {
 		c.AbortWithStatus(401)
 		return
 	}

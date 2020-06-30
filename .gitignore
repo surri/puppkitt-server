@@ -2,6 +2,8 @@
 /go/main
 /go/gin-bin
 /go/vendor/
+/go/github.com/
+/go/gopkg.in/
 
 /mariadb/mysql/
 # Log files
