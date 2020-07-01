@@ -5,20 +5,28 @@ services:
     image: mariadb:10.5.3
     restart: always
     volumes:
-      - ./mariadb/mysql:/var/lib/mysql
-      - ./mariadb/conf.d:/etc/mysql/conf.d
+      - ./server/mariadb/mysql:/var/lib/mysql
+      - ./server/mariadb/conf.d:/etc/mysql/conf.d
     ports:
       - 43306:3306
     environment:
       MYSQL_ROOT_PASSWORD: puppkitt1234
 
   go-api:
-    build: ./go
+    build: ./server/go
     depends_on:
       - mariadb
     volumes:
-      - ./go:/go/src
+      - ./server/go:/go/src
     ports:
       - 48080:8080
     links:
       - mariadb
+
+  react-webapp:
+    build: ./webapp
+    volumes:
+      - ./webapp:/app
+    ports:
+      - 43000:3000
+    stdin_open: true
