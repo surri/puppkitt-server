@@ -6,9 +6,9 @@ WORKDIR $GOPATH/src/
 COPY go.mod .
 COPY go.sum .
 
-RUN go mod download
-
 COPY . .
+
+RUN go mod download
 
 RUN go get -u "github.com/gin-gonic/contrib/cors"
 RUN go get -u "github.com/codegangsta/gin"
