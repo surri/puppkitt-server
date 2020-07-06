@@ -70,9 +70,10 @@ func register(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 
 	type RequestBody struct {
-		UserName    string `json:"UserName" binding:"required"`
-		NickName    string `json:"NickName" binding:"required"`
-		Password    string `json:"Password" binding:"required"`
+		Email    string `json:"email" binding:"required"`
+		Phone    string `json:"phone" binding:"required"`
+		DisplayName    string `json:"display_name" binding:"required"`
+		Password    string `json:"password" binding:"required"`
 	}
 
 	var body RequestBody
@@ -83,10 +84,10 @@ func register(c *gin.Context) {
 
 	// check existancy
 	var exists User
-	if err := db.Where("UserName = ?", body.UserName).First(&exists).Error; err == nil {
+	if err := db.Where("email = ?", body.Email).First(&exists).Error; err == nil {
 		c.AbortWithStatusJSON(409, common.JSON{
-			"UserName":  body.UserName,
-			"Message": "exists UserName",
+			"email":  body.Email,
+			"Message": "exists email",
 		})
 		return
 	}
@@ -97,15 +98,14 @@ func register(c *gin.Context) {
 		return
 	}
 
-	date := time.Now()//getMillis()
-
 	// create user
 	user := User{
 		Id : NewId(),
-		CreateAt:	date,
-		UpdateAt:	date,
-		UserName:	body.UserName,
-		NickName:	body.NickName,
+		CreateAt:	getMillis(),
+		UpdateAt:	getMillis(),
+		Email:	body.Email,
+		Phone:	body.Phone,
+		DisplayName:	body.DisplayName,
 		Password:	hash,
 	}
 
@@ -125,7 +125,7 @@ func register(c *gin.Context) {
 func login(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 	type RequestBody struct {
-		UserName string `json:"UserName" binding:"required"`
+		Email string `json:"email" binding:"required"`
 		Password string `json:"password" binding:"required"`
 	}
 
@@ -137,7 +137,7 @@ func login(c *gin.Context) {
 
 	// check existancy
 	var user User
-	if err := db.Where("UserName = ?", body.UserName).First(&user).Error; err != nil {
+	if err := db.Where("email = ?", body.Email).First(&user).Error; err != nil {
 		c.AbortWithStatus(404) // user not found
 		return
 	}
