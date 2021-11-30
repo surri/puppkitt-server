@@ -5,7 +5,7 @@ import (
 	"os"
 
 	"github.com/jinzhu/gorm"
-	"puppkitt.com/v1/database/models"
+	"hotpler.com/v1/database/models"
 	_"github.com/go-sql-driver/mysql"
 )
 
@@ -17,6 +17,7 @@ func Initialize() (*gorm.DB, error) {
 	db, err := gorm.Open("mysql", dbConfig)
 	db.LogMode(true) // logs SQL
 	if err != nil {
+		panic("panic model")
 		panic(err)
 	}
 	fmt.Println("Connected to database")

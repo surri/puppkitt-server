@@ -9,8 +9,8 @@ import (
 
 	jwt "github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
-	"puppkitt.com/v1/database/models"
-	"puppkitt.com/v1/lib/common"
+	"hotpler.com/v1/database/models"
+	"hotpler.com/v1/lib/common"
 )
 
 var secretKey []byte

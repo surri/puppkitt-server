@@ -1,7 +1,7 @@
 package models
 
 import (
-	"puppkitt.com/v1/lib/common"
+	"hotpler.com/v1/lib/common"
 )
 
 type Place struct {

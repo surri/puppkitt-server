@@ -1,7 +1,7 @@
 package models
 
 import (
-	"puppkitt.com/v1/lib/common"
+	"hotpler.com/v1/lib/common"
 )
 
 // User data model
@@ -28,7 +28,7 @@ func (u *User) Serialize() common.JSON {
 
 func (u *User) Read(m common.JSON) {
 	u.Id		= m["id"].(string)
-	u.Email	= m["first_name"].(string)
+	u.Email	= m["email"].(string)
 	// u.Phone	= m["phone"].(string)
 	u.DisplayName	= m["display_name"].(string)
 }

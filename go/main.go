@@ -5,20 +5,22 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
-	"puppkitt.com/v1/api"
-	"puppkitt.com/v1/database"
-	"puppkitt.com/v1/lib/middlewares"
+	"hotpler.com/v1/api"
+	"hotpler.com/v1/database"
+	"hotpler.com/v1/lib/middlewares"
 )
 
 func main() {
 	// load .env environment variables
 	err := godotenv.Load()
 	if err != nil {
+		panic("panic main")
 		panic(err)
 	}
 
 	// initializes database
 	db, _ := database.Initialize()
+	gin.SetMode(gin.ReleaseMode)
 
 	port := os.Getenv("PORT")
 	app := gin.Default() // create gin app

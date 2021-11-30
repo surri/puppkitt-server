@@ -2,8 +2,8 @@ package api
 
 import (
 	"github.com/gin-gonic/gin"
-	"puppkitt.com/v1/api/auth"
-	"puppkitt.com/v1/api/posts"
+	"hotpler.com/v1/api/auth"
+	"hotpler.com/v1/api/posts"
 )
 
 func ping(c *gin.Context) {
@@ -15,7 +15,7 @@ func ping(c *gin.Context) {
 func ApplyRoutes(r *gin.Engine) {
 	api := r.Group("/api")
 	{
-		api.POST("/ping", ping)
+		api.GET("/ping", ping)
 		auth.ApplyRoutes(api)
 		posts.ApplyRoutes(api)
 	}

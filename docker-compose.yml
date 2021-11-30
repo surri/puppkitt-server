@@ -11,10 +11,10 @@ services:
       - 43306:3306
     environment:
       MYSQL_ROOT_USER: root
-      MYSQL_ROOT_PASSWORD: puppkitt1234
-      MYSQL_DATABASE: puppkitt
-      MYSQL_USER: puppkitt
-      MYSQL_PASSWORD: puppkitt1234
+      MYSQL_ROOT_PASSWORD: hotpler1234
+      MYSQL_DATABASE: hotpler
+      MYSQL_USER: hotpler
+      MYSQL_PASSWORD: hotpler1234
 
   go-api:
     build: ./go

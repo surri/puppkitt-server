@@ -1,4 +1,4 @@
-module puppkitt.com/v1
+module hotpler.com/v1
 
 go 1.14
 

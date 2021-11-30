@@ -2,7 +2,7 @@ package posts
 
 import (
 	"github.com/gin-gonic/gin"
-	"puppkitt.com/v1/lib/middlewares"
+	"hotpler.com/v1/lib/middlewares"
 )
 
 // ApplyRoutes applies router to the gin Engine

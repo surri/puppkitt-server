@@ -9,15 +9,16 @@ import (
 	jwt "github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
-	"puppkitt.com/v1/database/models"
-	"puppkitt.com/v1/lib/common"
+	"hotpler.com/v1/database/models"
+	"hotpler.com/v1/lib/common"
 	"golang.org/x/crypto/bcrypt"
 	"bytes"
 	"encoding/base32"
 	"github.com/pborman/uuid"
 )
 
-var encoding = base32.NewEncoding("puppkitt0926surrijkl213avo95oea2")
+
+var encoding = base32.NewEncoding("hotpler0926surrijkl213avo95oea23")
 
 func NewId() string {
 	var b bytes.Buffer
@@ -70,14 +71,15 @@ func register(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 
 	type RequestBody struct {
-		Email    string `json:"email" binding:"required"`
-		Phone    string `json:"phone" binding:"required"`
-		DisplayName    string `json:"display_name" binding:"required"`
-		Password    string `json:"password" binding:"required"`
+		Email		string `json:"email" binding:"required"`
+		Phone		string `json:"phone" binding:"required"`
+		DisplayName	string `json:"displayName" binding:"required"`
+		Password	string `json:"password" binding:"required"`
 	}
 
 	var body RequestBody
 	if err := c.BindJSON(&body); err != nil {
+		panic(err)
 		c.AbortWithStatus(400)
 		return
 	}
